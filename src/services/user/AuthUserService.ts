@@ -32,7 +32,7 @@ class AuthUserService {
         const passwordMatch =  await compare(password, user?.password)
 
         if(!passwordMatch) {
-            throw new Error("Wrong password!")
+            throw new Error("Wrong User name or Password!")
         }
 
         const token = sign(
