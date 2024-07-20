@@ -23,6 +23,6 @@ export function isAuthenticated(
         request.user_id = sub;
         return next();
     } catch(error){
-        return response.send(401).end();
+        return response.sendStatus(401).end();
     }
 }
