@@ -13,6 +13,7 @@ import { RemoveCategoryController } from "./controllers/category/RemoveCategoryC
 import { CreateProductController } from "./controllers/product/CreateProductController";
 import { EditProductController } from "./controllers/product/EditProductController";
 import { ListProductByCategoryController } from "./controllers/product/ListProductByCategoryController";
+import { ListProductsController } from "./controllers/product/ListProductsController";
 
 const router = Router();
 const upload = multer(uploadConfig.upload("./tmp"));
@@ -38,6 +39,7 @@ router.delete("/category/remove", isAuthenticated, new RemoveCategoryController(
 router.post("/product", isAuthenticated, upload.single("file"), new CreateProductController().handle)
 router.put("/product/edit", isAuthenticated, upload.single("file"), new EditProductController().handle);
 router.get("/product", isAuthenticated, new ListProductByCategoryController().handle);
+router.get("/products", isAuthenticated, new ListProductsController().handle);
 
 export { router };
 
