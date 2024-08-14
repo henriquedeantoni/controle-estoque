@@ -95,7 +95,109 @@
                     }
                 }
             }
+        },
+        "/v1/user/remove?user_id={user_id}:" : {
+            "delete" : {
+                "description" : "Remover Usuário",
+                "parameters" : [
+                    {
+                        "name" : "user_id",
+                        "in" : "path",
+                        "description" : "ID do usuário",
+                        "required" : "true",
+                        "type" : "string",
+                        "format" : "uuid"
+                    }
+                ],
+                "responses" : {
+                    "200" : {
+                        "content" : {
+                            "application/json":{ 
+                                "schema":{
+                                    "$ref":"#/components/schemas/ResponseDeleteUser"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/category/":{
+            "post":{
+                "description":"criar nova categoria",
+                "security":[
+                    {
+                        "bearerAuth":[]
+                    }
+                ],
+                "requestBody" : {
+                    "description":"Dados necessários para a criação de uma nova categoria",
+                    "content" : {
+                        "application/json":{
+                            "schema" :{
+                                "$ref":"#/components/schemas/RequestCreateCategory"
+                            }
+                        }
+                    }
+                },
+                "responses" : {
+                    "200": {
+                        "content" : {
+                            "application/json":{
+                                "schema" :{
+                                    "$ref":"#/components/schemas/ResponseCreateCategory"
+                                }
+                            }
+
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/category/edit?category_id={category_id}":{
+            "put":{
+                "description":"Editar uma categoria",
+                "security":[
+                    {
+                        "bearerAuth":[]
+                    }
+                ],
+                "parameter": [
+                    {
+                        "name":"category_id",
+                        "in": "path",
+                        "description": "ID da categoria",
+                        "required":"true",
+                        "type":"string",
+                        "format":"uuid"
+                    }
+                ],
+                "requestBody":{
+                    "description":"Dados necessários para a criação de uma editar uma categoria",
+                    "content" : {
+                        "application/json":{
+                            "schema" :{
+                                "$ref":"#/components/schemas/RequestResponseCreateCategory"
+                            }
+                        }
+
+                    }
+                },
+                "responses":{
+                    "200":{
+                       "content" : {
+                        "application/json":{
+                            "schema" :{
+                                "$ref":"#/components/schemas/ResponseCreateCategory"
+                            }
+                        }
+
+                    } 
+                    }
+                }
+            }
         }
+
     },
     "components":{
         "schemas":{
@@ -157,10 +259,29 @@
                         "type":"string"
                     }
                 }
+            },
+            "ResponseDeleteUser":{
+                "type":"object"
+            },
+            "RequestCreateCategory":{
+                "type":"object",
+                "properties":{
+                    "id":{
+                    "type":"string"
+                    },
+                    "name":{
+                        "type":"string"
+                    }
+                }
             }
         },
         "securitySchemes":{
-
+            "bearerAuth" : {
+                "description": "Autenticação utilizando Json web Token",
+                "type" : "http",
+                "scheme":"bearer",
+                "bearerFormat":"JWT"
+            }
         }
     }
 }
